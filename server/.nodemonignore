@@ -1,0 +1,3 @@
+verify_auth.js
+*.test.js
+*.spec.js
