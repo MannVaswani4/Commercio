@@ -7,8 +7,12 @@ import api from '../services/api';
 const HeaderContainer = styled.header`
   background-color: var(--primary-color);
   color: var(--white);
-  padding: 1rem 0;
-  box-shadow: var(--shadow-md);
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
 `;
 
 const Nav = styled.nav`
@@ -17,10 +21,10 @@ const Nav = styled.nav`
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  width: 90%;
+  width: 92%;
   
   @media (max-width: 768px) {
-    width: 95%;
+    width: 90%;
   }
 `;
 
@@ -51,8 +55,16 @@ const NavLink = styled(Link)`
   align-items: center;
   gap: 0.5rem;
   font-weight: 500;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+  
   &:hover {
     color: var(--accent-color);
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
   }
 `;
 
@@ -60,50 +72,50 @@ import useAuthStore from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-    const { userInfo, logout } = useAuthStore();
-    const navigate = useNavigate();
+  const { userInfo, logout } = useAuthStore();
+  const navigate = useNavigate();
 
-    const logoutHandler = async () => {
-        try {
-            await api.post('/users/logout');
-            logout();
-            navigate('/login');
-        } catch (err) {
-            console.error(err);
-        }
+  const logoutHandler = async () => {
+    try {
+      await api.post('/users/logout');
+      logout();
+      navigate('/login');
+    } catch (err) {
+      console.error(err);
     }
+  }
 
-    return (
-        <HeaderContainer>
-            <Nav>
-                <Logo to="/">COMMERCIO</Logo>
-                <NavLinks>
-                    <NavLink to="/cart">
-                        <FaShoppingCart /> Cart
-                    </NavLink>
-                    {userInfo ? (
-                        <>
-                            <NavLink to="/profile">
-                                <FaUser /> {userInfo.name}
-                            </NavLink>
-                            {userInfo.role === 'admin' && (
-                                <NavLink to="/admin/productlist">
-                                    Admin
-                                </NavLink>
-                            )}
-                            <button onClick={logoutHandler} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1rem', fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>
-                                Logout
-                            </button>
-                        </>
-                    ) : (
-                        <NavLink to="/login">
-                            <FaUser /> Sign In
-                        </NavLink>
-                    )}
-                </NavLinks>
-            </Nav>
-        </HeaderContainer>
-    );
+  return (
+    <HeaderContainer>
+      <Nav>
+        <Logo to="/">COMMERCIO</Logo>
+        <NavLinks>
+          <NavLink to="/cart">
+            <FaShoppingCart /> Cart
+          </NavLink>
+          {userInfo ? (
+            <>
+              <NavLink to="/profile">
+                <FaUser /> {userInfo.name}
+              </NavLink>
+              {userInfo.role === 'admin' && (
+                <NavLink to="/admin/productlist">
+                  Admin
+                </NavLink>
+              )}
+              <button onClick={logoutHandler} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1rem', fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <NavLink to="/login">
+              <FaUser /> Sign In
+            </NavLink>
+          )}
+        </NavLinks>
+      </Nav>
+    </HeaderContainer>
+  );
 };
 
 export default Header;

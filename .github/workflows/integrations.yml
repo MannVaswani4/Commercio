@@ -8,32 +8,78 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Installing Dependencies
-        run: npm i
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Build command
+      - name: Install Client Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Build Client
+        working-directory: ./client
         run: npm run build
 
-      - name: Upload a Build Artifact
+      - name: Upload Client Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-build-artifact
-          path: .next/           
-          if-no-files-found: warn
+          name: client-build-artifact
+          path: client/dist/
+          if-no-files-found: error
           retention-days: 1
 
-  unit-tests:
+  build-server:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Installing Dependenciesssss
-        run: npm i
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Server Dependencies
+        working-directory: ./server
+        run: npm ci
+
+  unit-tests-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Client Dependencies
+        working-directory: ./client
+        run: npm ci
         
-      - name: Running test cases
+      - name: Run Client Tests
+        working-directory: ./client
+        run: npm run test
+
+  unit-tests-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Server Dependencies
+        working-directory: ./server
+        run: npm ci
+        
+      - name: Run Server Tests
+        working-directory: ./server
         run: npm run test
