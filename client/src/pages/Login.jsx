@@ -92,8 +92,8 @@ const Login = () => {
 
     return (
         <FormContainer title="Sign In" subtitle="Welcome back — enter your details to continue.">
-            {/* Google OAuth */}
-            <GoogleButton href="/api/auth/google">
+            {/* Google OAuth — href must be absolute in production (Vercel has no proxy) */}
+            <GoogleButton href={`${import.meta.env.VITE_SERVER_URL || ''}/api/auth/google`}>
                 <GoogleIcon />
                 Continue with Google
             </GoogleButton>
