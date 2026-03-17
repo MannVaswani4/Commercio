@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Rating from '../components/Rating';
 import Button from '../components/Button';
 import api from '../services/api';
+import { getImageUrl } from '../utils/imageUrl';
 import { FiArrowLeft, FiPackage, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
 const BackLink = styled(Link)`
@@ -184,7 +185,7 @@ const ProductScreen = () => {
 
       <Layout>
         <ProductImageWrap>
-          <img src={product.image} alt={product.name} />
+          <img src={getImageUrl(product.image)} alt={product.name} />
         </ProductImageWrap>
 
         <Info>

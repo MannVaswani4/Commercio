@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { FiArrowRight } from 'react-icons/fi';
+import { getImageUrl } from '../utils/imageUrl';
 
 const Card = styled.div`
   background: var(--bg-white);
@@ -104,7 +105,7 @@ const Product = ({ product }) => {
     <Card>
       <ImageLink to={`/product/${product._id}`}>
         <ProductImage
-          src={product.image}
+          src={getImageUrl(product.image)}
           alt={product.name}
           onError={(e) => {
             e.target.style.padding = '2rem';
