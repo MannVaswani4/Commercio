@@ -16,21 +16,8 @@ app.use(cookieParser());
 app.use(helmet({
     crossOriginOpenerPolicy: { policy: 'unsafe-none' }, // allow Google OAuth popup to communicate
 }));
-const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    process.env.CLIENT_URL,
-].filter(Boolean);
-
 app.use(cors({
-    origin: (origin, callback) => {
-        // Allow server-to-server (no origin) and any listed origin
-        if (!origin || allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        }
-        // Unknown origin — deny but don't throw (avoids blank CORS header)
-        callback(null, false);
-    },
+    origin: true,      // Mirrors the request's Origin — always sets the header
     credentials: true,
 }));
 
