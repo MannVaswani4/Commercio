@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      // Dev only — in production, VITE_API_URL env var points directly to Railway
       '/api': {
         target: 'http://localhost:5001',
         changeOrigin: true,
@@ -19,5 +20,8 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+  build: {
+    outDir: 'dist',
   },
 });

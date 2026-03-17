@@ -17,7 +17,16 @@ app.use(helmet({
     crossOriginOpenerPolicy: { policy: 'unsafe-none' }, // allow Google OAuth popup to communicate
 }));
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+        const allowed = [
+            'http://localhost:5173',
+            'http://localhost:3000',
+            process.env.CLIENT_URL,
+        ].filter(Boolean);
+        // Allow requests with no origin (e.g. mobile apps, curl)
+        if (!origin || allowed.includes(origin)) return callback(null, true);
+        callback(new Error(`CORS: origin ${origin} not allowed`));
+    },
     credentials: true,
 }));
 
