@@ -1,31 +1,41 @@
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  background: var(--primary-color);
-  color: var(--white);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: #fff;
+  border: 1.5px solid var(--primary);
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-sm);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
   width: 100%;
-  transition: all 0.2s;
-  
-  &:hover {
-    background: var(--secondary-color);
+  transition: background 0.18s ease, transform 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover:not(:disabled) {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 
   &:disabled {
-    background: #94A3B8;
+    background: #D1D5DB;
+    border-color: #D1D5DB;
+    color: #9CA3AF;
     cursor: not-allowed;
-    transform: none;
   }
 `;
 
 const Button = ({ children, ...props }) => {
-    return <StyledButton {...props}>{children}</StyledButton>;
+  return <StyledButton {...props}>{children}</StyledButton>;
 };
 
 export default Button;

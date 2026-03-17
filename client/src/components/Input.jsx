@@ -6,34 +6,42 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.375rem;
   font-weight: 500;
-  color: var(--text-color);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 `;
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  font-family: var(--font-body);
+  padding: 0.75rem 0;
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  border-radius: 0;
+  background: transparent;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  color: var(--text);
+  transition: border-color 0.2s ease;
+  outline: none;
 
   &:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    border-bottom-color: var(--primary);
+  }
+
+  &::placeholder {
+    color: #C4C4C4;
   }
 `;
 
 const Input = ({ label, id, ...props }) => {
-    return (
-        <FormGroup>
-            {label && <Label htmlFor={id}>{label}</Label>}
-            <StyledInput id={id} {...props} />
-        </FormGroup>
-    );
+  return (
+    <FormGroup>
+      {label && <Label htmlFor={id}>{label}</Label>}
+      <StyledInput id={id} {...props} />
+    </FormGroup>
+  );
 };
 
 export default Input;

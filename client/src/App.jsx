@@ -16,6 +16,7 @@ import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import OrderScreen from './pages/OrderScreen';
 import Cart from './pages/Cart';
+import AuthCallback from './pages/AuthCallback';
 
 // Admin Pages
 import AdminRoute from './components/AdminRoute';
@@ -34,11 +35,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="product/:id" element={<ProductScreen />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="cart/:id" element={<Cart />} />
+              <Route path="product/:id" element={<ProductScreen />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="cart/:id" element={<Cart />} />
+              <Route path="auth/callback" element={<AuthCallback />} />
 
             <Route path="" element={<PrivateRoute />}>
               <Route path="profile" element={<Profile />} />

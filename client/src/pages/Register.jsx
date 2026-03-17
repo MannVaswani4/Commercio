@@ -44,7 +44,7 @@ const Register = () => {
     };
 
     return (
-        <FormContainer title="Register">
+        <FormContainer title="Create Account" subtitle="Join Commercio and start shopping today.">
             <form onSubmit={submitHandler}>
                 <Input
                     label="Name"
@@ -78,15 +78,15 @@ const Register = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
-                <Button type="submit">
-                    Register
+                <Button type="submit" style={{ marginTop: '0.5rem' }}>
+                    Create Account
                 </Button>
             </form>
 
-            <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+            <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
                 Already have an account?{' '}
-                <Link to={redirect ? `/login?redirect=${redirect}` : '/login'} style={{ color: 'var(--accent-color)' }}>
-                    Login
+                <Link to={redirect ? `/login?redirect=${redirect}` : '/login'} style={{ color: 'var(--text)', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                    Sign in
                 </Link>
             </div>
         </FormContainer>

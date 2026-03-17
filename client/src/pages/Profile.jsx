@@ -17,14 +17,15 @@ const ProfileGrid = styled.div`
 `;
 
 const Section = styled.div`
-  background: var(--white);
+  background: var(--bg-white);
   padding: 2rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   
   h2 {
     margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
   }
 `;
 

@@ -5,153 +5,238 @@ import { toast } from 'react-toastify';
 import Rating from '../components/Rating';
 import Button from '../components/Button';
 import api from '../services/api';
+import { FiArrowLeft, FiPackage, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
 const BackLink = styled(Link)`
-  display: inline-block;
-  margin-bottom: 2rem;
-  color: var(--light-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
   font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  transition: color 0.15s;
+
   &:hover {
-    color: var(--primary-color);
+    color: var(--text);
   }
 `;
 
-const ProductGrid = styled.div`
+const Layout = styled.div`
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr 340px;
+  gap: 2.5rem;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const Image = styled.img`
-  width: 100%;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-`;
+const ProductImageWrap = styled.div`
+  background: var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
 
-const Info = styled.div`
-  h3 {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    margin-bottom: 1rem;
-    color: var(--light-text);
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-const CartCard = styled.div`
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+const Info = styled.div``;
+
+const ProductName = styled.h1`
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+`;
+
+const MetaRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+`;
+
+const PriceLabel = styled.span`
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+`;
+
+const Divider = styled.hr`
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.25rem 0;
+`;
+
+const Description = styled.p`
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+`;
+
+const PurchaseCard = styled.div`
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  background: var(--white);
+  background: var(--bg-white);
   height: fit-content;
 
-  .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #f1f5f9;
-    font-weight: 500;
-    
-    &:last-child {
-      border-bottom: none;
-    }
+  @media (max-width: 1024px) {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 768px) {
+    grid-column: span 1;
   }
 `;
 
-const Select = styled.select`
-  width: 100%;
-  padding: 0.5rem;
+const CardRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.9rem;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+`;
+
+const StatusBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: ${p => p.$inStock ? 'var(--success)' : 'var(--danger)'};
+`;
+
+const QtySelect = styled.select`
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--bg-white);
+  cursor: pointer;
+  transition: border-color 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+`;
+
+const LoadingState = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 `;
 
 const ProductScreen = () => {
-    const [product, setProduct] = useState({});
-    const [qty, setQty] = useState(1);
-    const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState({});
+  const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(true);
 
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const { data } = await api.get(`/products/${id}`);
-                setProduct(data);
-                setLoading(false);
-            } catch (err) {
-                toast.error(err?.response?.data?.message || err.message);
-                setLoading(false);
-            }
-        };
-
-        fetchProduct();
-    }, [id]);
-
-    const addToCartHandler = () => {
-        // We haven't implemented Cart context/store yet, so just navigate for now or store in LS
-        // Plan: Use navigate to cart page with query params or update state
-        navigate(`/cart/${id}?qty=${qty}`);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const { data } = await api.get(`/products/${id}`);
+        setProduct(data);
+      } catch (err) {
+        toast.error(err?.response?.data?.message || err.message);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchProduct();
+  }, [id]);
 
-    if (loading) return <h2>Loading...</h2>;
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
 
-    return (
-        <>
-            <BackLink to="/">Go Back</BackLink>
-            <ProductGrid>
-                <Image src={product.image} alt={product.name} />
+  if (loading) return <LoadingState>Loading product...</LoadingState>;
 
-                <Info>
-                    <h3>{product.name}</h3>
-                    <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-                    <p>Price: ${product.price}</p>
-                    <p>Description: {product.description}</p>
-                </Info>
+  return (
+    <>
+      <BackLink to="/"><FiArrowLeft size={15} /> Back to shop</BackLink>
 
-                <CartCard>
-                    <div className="row">
-                        <span>Price:</span>
-                        <span><strong>${product.price}</strong></span>
-                    </div>
-                    <div className="row">
-                        <span>Status:</span>
-                        <span>{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</span>
-                    </div>
+      <Layout>
+        <ProductImageWrap>
+          <img src={product.image} alt={product.name} />
+        </ProductImageWrap>
 
-                    {product.countInStock > 0 && (
-                        <div className="row" style={{ display: 'block', border: 'none' }}>
-                            <span style={{ display: 'block', marginBottom: '0.5rem' }}>Qty</span>
-                            <Select value={qty} onChange={(e) => setQty(Number(e.target.value))}>
-                                {[...Array(product.countInStock).keys()].map((x) => (
-                                    <option key={x + 1} value={x + 1}>
-                                        {x + 1}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                    )}
+        <Info>
+          <ProductName>{product.name}</ProductName>
+          <MetaRow>
+            <PriceLabel>${product.price}</PriceLabel>
+            <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+          </MetaRow>
+          <Divider />
+          <Description>{product.description}</Description>
+        </Info>
 
-                    <Button
-                        onClick={addToCartHandler}
-                        disabled={product.countInStock === 0}
-                        style={{ marginTop: '1rem' }}
-                    >
-                        Add To Cart
-                    </Button>
-                </CartCard>
-            </ProductGrid>
-        </>
-    );
+        <PurchaseCard>
+          <CardRow>
+            <span>Price</span>
+            <strong>${product.price}</strong>
+          </CardRow>
+          <CardRow>
+            <span>Status</span>
+            <StatusBadge $inStock={product.countInStock > 0}>
+              {product.countInStock > 0 ? (
+                <><FiCheckCircle size={13} /> In Stock</>
+              ) : (
+                <><FiXCircle size={13} /> Out of Stock</>
+              )}
+            </StatusBadge>
+          </CardRow>
+
+          {product.countInStock > 0 && (
+            <CardRow>
+              <span>Quantity</span>
+              <QtySelect value={qty} onChange={(e) => setQty(Number(e.target.value))}>
+                {[...Array(Math.min(product.countInStock, 10)).keys()].map((x) => (
+                  <option key={x + 1} value={x + 1}>{x + 1}</option>
+                ))}
+              </QtySelect>
+            </CardRow>
+          )}
+
+          <div style={{ marginTop: '1.25rem' }}>
+            <Button
+              onClick={addToCartHandler}
+              disabled={product.countInStock === 0}
+            >
+              <FiPackage size={16} />
+              {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
+            </Button>
+          </div>
+        </PurchaseCard>
+      </Layout>
+    </>
+  );
 };
 
 export default ProductScreen;

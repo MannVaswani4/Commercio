@@ -1,36 +1,53 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
+const Outer = styled.div`
+  min-height: 70vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  justify-content: center;
+  padding: 2rem;
 `;
 
-const FormWrapper = styled.div`
-  background: var(--white);
-  padding: 2.5rem;
+const Card = styled.div`
+  background: var(--bg-white);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  padding: 2.5rem 2rem;
   width: 100%;
-  max-width: 500px;
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
+  max-width: 440px;
+
+  @media (max-width: 480px) {
+    padding: 2rem 1.25rem;
+    border: none;
+    box-shadow: none;
+    background: transparent;
   }
 `;
 
-const FormContainer = ({ children, title }) => {
-    return (
-        <Container>
-            <FormWrapper>
-                {title && <h1>{title}</h1>}
-                {children}
-            </FormWrapper>
-        </Container>
-    );
+const Title = styled.h1`
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.25rem;
+`;
+
+const Subtitle = styled.p`
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+`;
+
+const FormContainer = ({ children, title, subtitle }) => {
+  return (
+    <Outer>
+      <Card>
+        {title && <Title>{title}</Title>}
+        {subtitle && <Subtitle>{subtitle}</Subtitle>}
+        {!subtitle && title && <div style={{ marginBottom: '1.75rem' }} />}
+        {children}
+      </Card>
+    </Outer>
+  );
 };
 
 export default FormContainer;
