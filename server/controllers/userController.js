@@ -143,7 +143,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         // We could also check if user exists in DB here for extra security
         const accessToken = generateAccessToken(decoded.userId);
         res.json({ accessToken });
-    } catch (error) {
+    } catch (_error) {
         res.status(401).json({ message: 'Invalid refresh token' });
     }
 });

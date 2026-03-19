@@ -10,8 +10,8 @@
     "test:unit": "jest __tests__/unit --forceExit",
     "test:integration": "jest __tests__/integration --forceExit",
     "test:coverage": "jest --coverage --forceExit",
-    "lint": "eslint . --ext .js --config .eslintrc.cjs",
-    "lint:fix": "eslint . --ext .js --config .eslintrc.cjs --fix",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
     "format": "prettier --write '**/*.js' --config ../.prettierrc --ignore-path ../.prettierignore"
   },
   "nodemonConfig": {
@@ -37,8 +37,11 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.3.0",
     "dotenv-flow": "^4.1.0",
+    "eslint": "^9.39.4",
+    "globals": "^17.4.0",
     "jest": "^30.3.0",
     "nodemon": "^3.1.11",
     "supertest": "^7.2.2"
