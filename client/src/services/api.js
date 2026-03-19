@@ -9,24 +9,56 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-    withCredentials: true, // Important for cookies/refresh tokens
+    withCredentials: true, // send cookies (refresh token)
 });
 
-// Response Interceptor: Handle 401s (Token Expiry)
+// --- Request Interceptor ---
+// Reads accessToken from Zustand store and attaches it as Bearer header.
+// Import is lazy (inside callback) to avoid circular dependency at module load.
+api.interceptors.request.use((config) => {
+    try {
+        const raw = localStorage.getItem('auth-storage');
+        if (raw) {
+            const { state } = JSON.parse(raw);
+            const token = state?.userInfo?.accessToken;
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`;
+            }
+        }
+    } catch (_) { /* ignore parse errors */ }
+    return config;
+});
+
+// --- Response Interceptor ---
+// On 401 (expired access token), try to refresh using the HTTP-only cookie.
 api.interceptors.response.use(
-    (response) => {
-        return response;
-    },
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                const { data } = await axios.post(`${baseURL}/users/refresh`, null, { withCredentials: true });
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.accessToken;
+                const { data } = await axios.post(
+                    `${baseURL}/users/refresh`,
+                    null,
+                    { withCredentials: true }
+                );
+                // Update stored token so the request interceptor uses it next time
+                try {
+                    const raw = localStorage.getItem('auth-storage');
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (parsed.state?.userInfo) {
+                            parsed.state.userInfo.accessToken = data.accessToken;
+                            localStorage.setItem('auth-storage', JSON.stringify(parsed));
+                        }
+                    }
+                } catch (_) { /* ignore */ }
+
+                originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
                 return api(originalRequest);
             } catch (refreshError) {
-                console.error('Refresh token expired', refreshError);
+                console.error('Refresh token expired or missing', refreshError);
                 return Promise.reject(refreshError);
             }
         }

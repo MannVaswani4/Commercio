@@ -1,0 +1,40 @@
+version: 2
+updates:
+  # ── npm (client) ──────────────────────────────
+  - package-ecosystem: npm
+    directory: /client
+    schedule:
+      interval: daily
+      time: '06:00'
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - frontend
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+
+  # ── npm (server) ──────────────────────────────
+  - package-ecosystem: npm
+    directory: /server
+    schedule:
+      interval: daily
+      time: '06:00'
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - backend
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+
+  # ── GitHub Actions ────────────────────────────
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+      - github-actions

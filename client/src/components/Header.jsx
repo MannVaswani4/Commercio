@@ -189,6 +189,7 @@ const Header = () => {
               {open && (
                 <Dropdown>
                   <DropdownLink to="/profile" onClick={() => setOpen(false)}>Profile</DropdownLink>
+                  <DropdownLink to="/order-history" onClick={() => setOpen(false)}>Order History</DropdownLink>
                   {userInfo.role === 'admin' && (
                     <>
                       <DropdownLink to="/admin/productlist" onClick={() => setOpen(false)}>Products</DropdownLink>

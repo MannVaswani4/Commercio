@@ -103,6 +103,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         if (req.body.password) {
             user.password = req.body.password;
         }
+        if (req.body.addresses !== undefined) {
+            user.addresses = req.body.addresses;
+        }
 
         const updatedUser = await user.save();
 
@@ -111,6 +114,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             name: updatedUser.name,
             email: updatedUser.email,
             role: updatedUser.role,
+            addresses: updatedUser.addresses,
             accessToken: generateAccessToken(updatedUser._id),
         });
     } else {
