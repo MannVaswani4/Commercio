@@ -23,9 +23,7 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Handle OPTIONS preflight for ALL routes FIRST (before any other middleware)
-app.options('*', cors(corsOptions));
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // cors() handles OPTIONS preflight automatically
 
 // Session (needed for passport, though we use stateless JWT — only used during OAuth handshake)
 app.use(session({
