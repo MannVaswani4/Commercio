@@ -37,7 +37,7 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "^9.39.4",
     "@jest/globals": "^30.3.0",
     "dotenv-flow": "^4.1.0",
     "eslint": "^9.39.4",

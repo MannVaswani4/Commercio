@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { toast } from 'react-toastify';
 import { FiCheckCircle, FiPackage, FiMapPin, FiCreditCard, FiClock, FiArrowRight } from 'react-icons/fi';
 import Button from '../components/Button';
 import CheckoutSteps from '../components/CheckoutSteps';

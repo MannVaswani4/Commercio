@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { FiPackage, FiSearch, FiFilter, FiClock, FiCheckCircle, FiXCircle, FiChevronDown } from 'react-icons/fi';
+import { FiPackage, FiSearch, FiFilter, FiClock, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import api from '../services/api';
 
 /* ─── Layout ─────────────────────────── */
@@ -221,7 +221,7 @@ const OrderHistory = () => {
             try {
                 const { data } = await api.get('/orders/myorders');
                 setOrders(data);
-            } catch (_) {
+            } catch {
                 // Fallback: show empty state gracefully
                 setOrders([]);
             } finally {

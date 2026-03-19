@@ -25,7 +25,7 @@ api.interceptors.request.use((config) => {
                 config.headers['Authorization'] = `Bearer ${token}`;
             }
         }
-    } catch (_) { /* ignore parse errors */ }
+    } catch { /* ignore parse errors */ }
     return config;
 });
 
@@ -53,7 +53,7 @@ api.interceptors.response.use(
                             localStorage.setItem('auth-storage', JSON.stringify(parsed));
                         }
                     }
-                } catch (_) { /* ignore */ }
+                } catch { /* ignore */ }
 
                 originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
                 return api(originalRequest);

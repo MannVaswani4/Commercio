@@ -136,8 +136,8 @@ const Profile = () => {
 
     /* contact edit state */
     const [editing, setEditing] = useState(null); // 'name' | 'email' | null
-    const [nameVal, setNameVal] = useState('');
-    const [emailVal, setEmailVal] = useState('');
+    const [nameVal, setNameVal] = useState(userInfo?.name || '');
+    const [emailVal, setEmailVal] = useState(userInfo?.email || '');
 
     /* address form state */
     const [showAddAddr, setShowAddAddr] = useState(false);
@@ -146,20 +146,13 @@ const Profile = () => {
     /* local copy of addresses */
     const [addresses, setAddresses] = useState([]);
 
-    useEffect(() => {
-        if (userInfo) {
-            setNameVal(userInfo.name);
-            setEmailVal(userInfo.email);
-        }
-    }, [userInfo]);
-
     /* Fetch profile to get addresses */
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const { data } = await api.get('/users/profile');
                 setAddresses(data.addresses || []);
-            } catch (_) {}
+            } catch { /* silently use empty addresses on error */ }
         };
         fetchProfile();
     }, []);
@@ -198,7 +191,7 @@ const Profile = () => {
             await api.put('/users/profile', { addresses: updated });
             setAddresses(updated);
             toast.success('Address removed');
-        } catch (err) {
+        } catch {
             toast.error('Could not remove address');
         }
     };

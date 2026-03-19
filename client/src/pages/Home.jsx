@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-import { motion, AnimatePresence } from 'framer-motion';
 import Product from '../components/Product';
 import api from '../services/api';
 import { FiArrowRight } from 'react-icons/fi';

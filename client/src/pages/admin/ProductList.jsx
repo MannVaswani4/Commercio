@@ -5,7 +5,6 @@ import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Button from '../../components/Button';
 import api from '../../services/api';
-import useAuthStore from '../../store/authStore';
 
 const Table = styled.table`
   width: 100%;
@@ -48,7 +47,6 @@ const ProductList = () => {
     // Let's stick to simple page 1 for now or iterate pages.
     // Actually, `getProducts` returns { products, page, pages }.
 
-    const { userInfo } = useAuthStore();
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -17,7 +17,6 @@ const ProductEdit = () => {
     const [category, setCategory] = useState('');
     const [countInStock, setCountInStock] = useState(0);
     const [description, setDescription] = useState('');
-    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -40,9 +39,8 @@ const ProductEdit = () => {
 
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
-        constformData = new FormData();
+        const formData = new FormData();
         formData.append('image', file);
-        setUploading(true);
 
         try {
             const config = {
@@ -52,10 +50,8 @@ const ProductEdit = () => {
             };
             const { data } = await api.post('/upload', formData, config);
             setImage(data);
-            setUploading(false);
-        } catch (err) {
-            console.error(err);
-            setUploading(false);
+        } catch {
+            console.error('Upload failed');
         }
     };
 
