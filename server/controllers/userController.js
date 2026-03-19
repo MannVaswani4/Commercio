@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
-const { generateAccessToken, generateRefreshToken } = require('../utils/generateToken');
+const { generateAccessToken, generateRefreshToken } = require('../../server/utils/generateToken');
 const jwt = require('jsonwebtoken');
 
 // @desc    Register a new user
