@@ -16,21 +16,42 @@ app.use(cookieParser());
 app.use(helmet({
     crossOriginOpenerPolicy: { policy: 'unsafe-none' }, // allow Google OAuth popup to communicate
 }));
+// Trust Railway/Heroku reverse proxy so req.secure = true (required for secure cookies)
+app.set('trust proxy', 1);
+
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://commercio-five.vercel.app',
+];
+
 const corsOptions = {
-    origin: true,        // Mirror request Origin — always sets the header
-    credentials: true,   // Required for cookies (refresh token)
+    origin: (origin, callback) => {
+        // Allow requests with no origin (server-to-server, curl) OR listed origins
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        callback(new Error(`CORS: origin ${origin} not allowed`));
+    },
+    credentials: true,   // Required so cookies (refresh token) are sent cross-origin
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions)); // cors() handles OPTIONS preflight automatically
 
-// Session (needed for passport, though we use stateless JWT — only used during OAuth handshake)
+const isProd = process.env.NODE_ENV === 'production';
+
+// Session (needed for passport OAuth handshake only — JWT handles auth state)
 app.use(session({
     secret: process.env.JWT_SECRET || 'session_secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 60000 }, // 1 min — just for the handshake
+    cookie: {
+        secure: isProd,                    // HTTPS only in production
+        sameSite: isProd ? 'none' : 'lax', // 'none' required for cross-origin (Vercel → Railway)
+        maxAge: 60000,                     // 1 min — only used during OAuth handshake
+    },
 }));
 
 // Passport
