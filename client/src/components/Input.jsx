@@ -31,7 +31,7 @@ const StyledInput = styled.input`
   }
 
   &::placeholder {
-    color: #C4C4C4;
+    color: #c4c4c4;
   }
 `;
 

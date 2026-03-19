@@ -5,8 +5,8 @@
  * In development, the Vite proxy handles /images → localhost:5001.
  */
 export const getImageUrl = (path) => {
-    if (!path) return '';
-    if (path.startsWith('http')) return path; // already absolute
-    const serverUrl = import.meta.env.VITE_SERVER_URL || '';
-    return `${serverUrl}${path}`;
+  if (!path) return '';
+  if (path.startsWith('http')) return path; // already absolute
+  const serverUrl = import.meta.env.VITE_SERVER_URL || '';
+  return `${serverUrl}${path}`;
 };

@@ -9,13 +9,16 @@ const Card = styled.div`
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
 
   &:hover {
-    border-color: #C4C4C4;
+    border-color: #c4c4c4;
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }

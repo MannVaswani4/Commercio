@@ -105,7 +105,9 @@ const RemoveBtn = styled.button`
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 
   &:hover {
     color: var(--danger);
@@ -199,10 +201,23 @@ const Cart = () => {
   if (cartItems.length === 0) {
     return (
       <EmptyState>
-        <EmptyIcon><FiShoppingBag /></EmptyIcon>
+        <EmptyIcon>
+          <FiShoppingBag />
+        </EmptyIcon>
         <EmptyTitle>Your cart is empty</EmptyTitle>
         <EmptyText>Add some products to get started.</EmptyText>
-        <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, color: 'var(--text)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+        <Link
+          to="/"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontWeight: 600,
+            color: 'var(--text)',
+            textDecoration: 'underline',
+            textUnderlineOffset: '3px',
+          }}
+        >
           <FiArrowLeft size={15} /> Continue shopping
         </Link>
       </EmptyState>
@@ -211,7 +226,18 @@ const Cart = () => {
 
   return (
     <>
-      <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+      <Link
+        to="/"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.4rem',
+          fontSize: '0.875rem',
+          fontWeight: 500,
+          color: 'var(--text-muted)',
+          marginBottom: '1.5rem',
+        }}
+      >
         <FiArrowLeft size={15} /> Continue shopping
       </Link>
 
@@ -230,7 +256,9 @@ const Cart = () => {
                   onChange={(e) => addToCart(item, Number(e.target.value))}
                 >
                   {[...Array(item.countInStock).keys()].map((x) => (
-                    <option key={x + 1} value={x + 1}>{x + 1}</option>
+                    <option key={x + 1} value={x + 1}>
+                      {x + 1}
+                    </option>
                   ))}
                 </QtySelect>
                 <RemoveBtn onClick={() => removeFromCart(item._id)} title="Remove">

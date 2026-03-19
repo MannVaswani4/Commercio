@@ -57,7 +57,9 @@ const NavLink = styled(Link)`
   color: var(--text-muted);
   padding: 0.4rem 0.75rem;
   border-radius: var(--radius-sm);
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
   white-space: nowrap;
 
   &:hover {
@@ -84,7 +86,9 @@ const UserBtn = styled.button`
   padding: 0.4rem 0.75rem;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 
   &:hover {
     color: var(--text);
@@ -116,7 +120,9 @@ const DropdownItem = styled.button`
   color: var(--text-muted);
   cursor: pointer;
   display: block;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 
   &:hover {
     background: var(--border-light);
@@ -130,7 +136,9 @@ const DropdownLink = styled(Link)`
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 
   &:hover {
     background: var(--border-light);
@@ -171,7 +179,9 @@ const Header = () => {
   return (
     <HeaderWrap>
       <Inner>
-        <Logo to="/">COMMERCIO<span>.</span></Logo>
+        <Logo to="/">
+          COMMERCIO<span>.</span>
+        </Logo>
 
         <NavLinks>
           <NavLink to="/cart">
@@ -188,13 +198,23 @@ const Header = () => {
               </UserBtn>
               {open && (
                 <Dropdown>
-                  <DropdownLink to="/profile" onClick={() => setOpen(false)}>Profile</DropdownLink>
-                  <DropdownLink to="/order-history" onClick={() => setOpen(false)}>Order History</DropdownLink>
+                  <DropdownLink to="/profile" onClick={() => setOpen(false)}>
+                    Profile
+                  </DropdownLink>
+                  <DropdownLink to="/order-history" onClick={() => setOpen(false)}>
+                    Order History
+                  </DropdownLink>
                   {userInfo.role === 'admin' && (
                     <>
-                      <DropdownLink to="/admin/productlist" onClick={() => setOpen(false)}>Products</DropdownLink>
-                      <DropdownLink to="/admin/orderlist" onClick={() => setOpen(false)}>Orders</DropdownLink>
-                      <DropdownLink to="/admin/userlist" onClick={() => setOpen(false)}>Users</DropdownLink>
+                      <DropdownLink to="/admin/productlist" onClick={() => setOpen(false)}>
+                        Products
+                      </DropdownLink>
+                      <DropdownLink to="/admin/orderlist" onClick={() => setOpen(false)}>
+                        Orders
+                      </DropdownLink>
+                      <DropdownLink to="/admin/userlist" onClick={() => setOpen(false)}>
+                        Users
+                      </DropdownLink>
                     </>
                   )}
                   <DropdownItem onClick={logoutHandler}>Sign out</DropdownItem>

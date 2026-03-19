@@ -50,7 +50,9 @@ const HeroAction = styled.a`
   border-radius: var(--radius-sm);
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background 0.18s ease, transform 0.15s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.15s ease;
 
   &:hover {
     background: var(--accent-hover);
@@ -111,8 +113,12 @@ const SkeletonImage = styled.div`
   animation: shimmer 1.5s infinite;
 
   @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
 `;
 
@@ -121,7 +127,7 @@ const SkeletonText = styled.div`
   height: 0.75rem;
   background: #e5e7eb;
   border-radius: 4px;
-  width: ${p => p.w || '100%'};
+  width: ${(p) => p.w || '100%'};
 `;
 
 const LoadingGrid = () => (
@@ -161,7 +167,8 @@ const Home = () => {
         <HeroLabel>New Arrivals</HeroLabel>
         <HeroTitle>Premium Tech, Delivered.</HeroTitle>
         <HeroSubtitle>
-          Discover curated electronics — from wireless audio to the latest smartphones — at transparent prices.
+          Discover curated electronics — from wireless audio to the latest smartphones — at
+          transparent prices.
         </HeroSubtitle>
         <HeroAction href="#products">
           Shop Now <FiArrowRight size={16} />

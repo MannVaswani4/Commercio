@@ -31,39 +31,48 @@ const CodIcon = styled.div`
 `;
 
 const CodText = styled.div`
-  h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
-  p  { font-size: 0.8rem; color: var(--text-muted); }
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
 `;
 
 const Payment = () => {
-    const { shippingAddress, savePaymentMethod } = useCartStore();
-    const navigate = useNavigate();
+  const { shippingAddress, savePaymentMethod } = useCartStore();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!shippingAddress.address) navigate('/shipping');
-    }, [shippingAddress, navigate]);
+  useEffect(() => {
+    if (!shippingAddress.address) navigate('/shipping');
+  }, [shippingAddress, navigate]);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        savePaymentMethod('Cash on Delivery');
-        navigate('/placeorder');
-    };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    savePaymentMethod('Cash on Delivery');
+    navigate('/placeorder');
+  };
 
-    return (
-        <FormContainer title="Payment" subtitle="Review your payment method before placing the order.">
-            <CheckoutSteps step1 step2 step3 />
-            <form onSubmit={submitHandler}>
-                <CodCard>
-                    <CodIcon><FiCreditCard size={18} /></CodIcon>
-                    <CodText>
-                        <h3>Cash on Delivery</h3>
-                        <p>Pay when your order arrives at your door.</p>
-                    </CodText>
-                </CodCard>
-                <Button type="submit">Continue to Order Review</Button>
-            </form>
-        </FormContainer>
-    );
+  return (
+    <FormContainer title="Payment" subtitle="Review your payment method before placing the order.">
+      <CheckoutSteps step1 step2 step3 />
+      <form onSubmit={submitHandler}>
+        <CodCard>
+          <CodIcon>
+            <FiCreditCard size={18} />
+          </CodIcon>
+          <CodText>
+            <h3>Cash on Delivery</h3>
+            <p>Pay when your order arrives at your door.</p>
+          </CodText>
+        </CodCard>
+        <Button type="submit">Continue to Order Review</Button>
+      </form>
+    </FormContainer>
+  );
 };
 
 export default Payment;

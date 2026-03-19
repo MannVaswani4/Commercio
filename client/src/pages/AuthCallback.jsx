@@ -23,7 +23,9 @@ const Spinner = styled.div`
   animation: spin 0.7s linear infinite;
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 
@@ -32,41 +34,41 @@ const Spinner = styled.div`
  * The server appends userInfo as query params after a successful login.
  */
 const AuthCallback = () => {
-    const [searchParams] = useSearchParams();
-    const { setUserInfo } = useAuthStore();
-    const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { setUserInfo } = useAuthStore();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const accessToken = searchParams.get('accessToken');
-        const error = searchParams.get('error');
+  useEffect(() => {
+    const accessToken = searchParams.get('accessToken');
+    const error = searchParams.get('error');
 
-        if (error) {
-            navigate('/login?error=' + error);
-            return;
-        }
+    if (error) {
+      navigate('/login?error=' + error);
+      return;
+    }
 
-        if (accessToken) {
-            const userInfo = {
-                accessToken,
-                _id: searchParams.get('_id'),
-                name: searchParams.get('name'),
-                email: searchParams.get('email'),
-                role: searchParams.get('role'),
-                avatar: searchParams.get('avatar') || null,
-            };
-            setUserInfo(userInfo);
-            navigate('/');
-        } else {
-            navigate('/login');
-        }
-    }, []);
+    if (accessToken) {
+      const userInfo = {
+        accessToken,
+        _id: searchParams.get('_id'),
+        name: searchParams.get('name'),
+        email: searchParams.get('email'),
+        role: searchParams.get('role'),
+        avatar: searchParams.get('avatar') || null,
+      };
+      setUserInfo(userInfo);
+      navigate('/');
+    } else {
+      navigate('/login');
+    }
+  }, []);
 
-    return (
-        <Wrapper>
-            <Spinner />
-            <span>Signing you in...</span>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <Spinner />
+      <span>Signing you in...</span>
+    </Wrapper>
+  );
 };
 
 export default AuthCallback;

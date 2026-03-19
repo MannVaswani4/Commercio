@@ -19,68 +19,65 @@ const FieldGrid = styled.div`
 `;
 
 const Shipping = () => {
-    const { shippingAddress, saveShippingAddress } = useCartStore();
-    const navigate = useNavigate();
+  const { shippingAddress, saveShippingAddress } = useCartStore();
+  const navigate = useNavigate();
 
-    const [address, setAddress] = useState(shippingAddress.address || '');
-    const [city, setCity] = useState(shippingAddress.city || '');
-    const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
-    const [country, setCountry] = useState(shippingAddress.country || '');
+  const [address, setAddress] = useState(shippingAddress.address || '');
+  const [city, setCity] = useState(shippingAddress.city || '');
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
+  const [country, setCountry] = useState(shippingAddress.country || '');
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        saveShippingAddress({ address, city, postalCode, country });
-        navigate('/payment');
-    };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    saveShippingAddress({ address, city, postalCode, country });
+    navigate('/payment');
+  };
 
-    return (
-        <FormContainer
-            title="Shipping"
-            subtitle="Where should we deliver your order?"
-        >
-            <CheckoutSteps step1 step2 />
+  return (
+    <FormContainer title="Shipping" subtitle="Where should we deliver your order?">
+      <CheckoutSteps step1 step2 />
 
-            <form onSubmit={submitHandler} style={{ marginTop: '1.25rem' }}>
-                <Input
-                    label="Street Address"
-                    placeholder="123 Main Street"
-                    value={address}
-                    required
-                    onChange={(e) => setAddress(e.target.value)}
-                />
+      <form onSubmit={submitHandler} style={{ marginTop: '1.25rem' }}>
+        <Input
+          label="Street Address"
+          placeholder="123 Main Street"
+          value={address}
+          required
+          onChange={(e) => setAddress(e.target.value)}
+        />
 
-                <FieldGrid>
-                    <Input
-                        label="City"
-                        placeholder="New York"
-                        value={city}
-                        required
-                        onChange={(e) => setCity(e.target.value)}
-                    />
-                    <Input
-                        label="Postal Code"
-                        placeholder="10001"
-                        value={postalCode}
-                        required
-                        onChange={(e) => setPostalCode(e.target.value)}
-                    />
-                </FieldGrid>
+        <FieldGrid>
+          <Input
+            label="City"
+            placeholder="New York"
+            value={city}
+            required
+            onChange={(e) => setCity(e.target.value)}
+          />
+          <Input
+            label="Postal Code"
+            placeholder="10001"
+            value={postalCode}
+            required
+            onChange={(e) => setPostalCode(e.target.value)}
+          />
+        </FieldGrid>
 
-                <Input
-                    label="Country"
-                    placeholder="United States"
-                    value={country}
-                    required
-                    onChange={(e) => setCountry(e.target.value)}
-                />
+        <Input
+          label="Country"
+          placeholder="United States"
+          value={country}
+          required
+          onChange={(e) => setCountry(e.target.value)}
+        />
 
-                <Button type="submit" style={{ marginTop: '0.5rem' }}>
-                    <FiArrowRight size={16} style={{ marginRight: '0.4rem' }} />
-                    Continue to Payment
-                </Button>
-            </form>
-        </FormContainer>
-    );
+        <Button type="submit" style={{ marginTop: '0.5rem' }}>
+          <FiArrowRight size={16} style={{ marginRight: '0.4rem' }} />
+          Continue to Payment
+        </Button>
+      </form>
+    </FormContainer>
+  );
 };
 
 export default Shipping;

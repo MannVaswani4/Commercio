@@ -26,9 +26,9 @@ const Dot = styled.div`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  border: 2px solid ${p => p.$active ? 'var(--primary)' : 'var(--border)'};
-  background: ${p => p.$active ? 'var(--primary)' : 'transparent'};
-  color: ${p => p.$active ? '#fff' : 'var(--text-muted)'};
+  border: 2px solid ${(p) => (p.$active ? 'var(--primary)' : 'var(--border)')};
+  background: ${(p) => (p.$active ? 'var(--primary)' : 'transparent')};
+  color: ${(p) => (p.$active ? '#fff' : 'var(--text-muted)')};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,13 +41,13 @@ const Dot = styled.div`
 const Line = styled.div`
   flex: 1;
   height: 1.5px;
-  background: ${p => p.$active ? 'var(--primary)' : 'var(--border)'};
+  background: ${(p) => (p.$active ? 'var(--primary)' : 'var(--border)')};
 `;
 
 const Label = styled.span`
   font-size: 0.65rem;
   font-weight: 600;
-  color: ${p => p.$active ? 'var(--text)' : 'var(--text-muted)'};
+  color: ${(p) => (p.$active ? 'var(--text)' : 'var(--text-muted)')};
   white-space: nowrap;
   letter-spacing: 0.02em;
   text-align: center;
@@ -71,9 +71,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             <Dot $active={active[s.key]}>
               {active[s.key] ? <FiCheck size={12} strokeWidth={3} /> : i + 1}
             </Dot>
-            {i < STEPS.length - 1 && (
-              <Line $active={active[s.key]} />
-            )}
+            {i < STEPS.length - 1 && <Line $active={active[s.key]} />}
           </DotAndLine>
           <Label $active={active[s.key]}>{s.label}</Label>
         </StepWrap>

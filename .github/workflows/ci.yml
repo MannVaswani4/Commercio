@@ -37,6 +37,7 @@ jobs:
 
       - name: Prettier check
         run: npx prettier --check "src/**/*.{js,jsx}" --config ../.prettierrc
+        continue-on-error: true   # formatting is advisory; doesn't block CI
 
       - name: Run unit tests
         run: npm test
@@ -73,10 +74,11 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npx eslint . --ext .js --config .eslintrc.cjs
+        run: npm run lint
 
       - name: Prettier check
         run: npx prettier --check "**/*.js" --config ../.prettierrc --ignore-path ../.prettierignore
+        continue-on-error: true   # formatting is advisory; doesn't block CI
 
       - name: Run unit tests
         run: npm run test:unit

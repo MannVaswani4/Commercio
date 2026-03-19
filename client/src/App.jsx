@@ -26,8 +26,6 @@ import ProductList from './pages/admin/ProductList';
 import ProductEdit from './pages/admin/ProductEdit';
 import OrderList from './pages/admin/OrderList';
 
-
-
 function App() {
   return (
     <>
@@ -36,12 +34,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-              <Route path="product/:id" element={<ProductScreen />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="cart/:id" element={<Cart />} />
-              <Route path="auth/callback" element={<AuthCallback />} />
+            <Route path="product/:id" element={<ProductScreen />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="cart/:id" element={<Cart />} />
+            <Route path="auth/callback" element={<AuthCallback />} />
 
             <Route path="" element={<PrivateRoute />}>
               <Route path="profile" element={<Profile />} />

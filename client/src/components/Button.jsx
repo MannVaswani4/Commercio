@@ -10,7 +10,9 @@ const StyledButton = styled.button`
   font-size: 0.9rem;
   letter-spacing: 0.02em;
   width: 100%;
-  transition: background 0.18s ease, transform 0.15s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,9 +29,9 @@ const StyledButton = styled.button`
   }
 
   &:disabled {
-    background: #D1D5DB;
-    border-color: #D1D5DB;
-    color: #9CA3AF;
+    background: #d1d5db;
+    border-color: #d1d5db;
+    color: #9ca3af;
     cursor: not-allowed;
   }
 `;

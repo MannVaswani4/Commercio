@@ -123,7 +123,7 @@ const StatusBadge = styled.span`
   gap: 0.3rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: ${p => p.$inStock ? 'var(--success)' : 'var(--danger)'};
+  color: ${(p) => (p.$inStock ? 'var(--success)' : 'var(--danger)')};
 `;
 
 const QtySelect = styled.select`
@@ -181,7 +181,9 @@ const ProductScreen = () => {
 
   return (
     <>
-      <BackLink to="/"><FiArrowLeft size={15} /> Back to shop</BackLink>
+      <BackLink to="/">
+        <FiArrowLeft size={15} /> Back to shop
+      </BackLink>
 
       <Layout>
         <ProductImageWrap>
@@ -207,9 +209,13 @@ const ProductScreen = () => {
             <span>Status</span>
             <StatusBadge $inStock={product.countInStock > 0}>
               {product.countInStock > 0 ? (
-                <><FiCheckCircle size={13} /> In Stock</>
+                <>
+                  <FiCheckCircle size={13} /> In Stock
+                </>
               ) : (
-                <><FiXCircle size={13} /> Out of Stock</>
+                <>
+                  <FiXCircle size={13} /> Out of Stock
+                </>
               )}
             </StatusBadge>
           </CardRow>
@@ -219,17 +225,16 @@ const ProductScreen = () => {
               <span>Quantity</span>
               <QtySelect value={qty} onChange={(e) => setQty(Number(e.target.value))}>
                 {[...Array(Math.min(product.countInStock, 10)).keys()].map((x) => (
-                  <option key={x + 1} value={x + 1}>{x + 1}</option>
+                  <option key={x + 1} value={x + 1}>
+                    {x + 1}
+                  </option>
                 ))}
               </QtySelect>
             </CardRow>
           )}
 
           <div style={{ marginTop: '1.25rem' }}>
-            <Button
-              onClick={addToCartHandler}
-              disabled={product.countInStock === 0}
-            >
+            <Button onClick={addToCartHandler} disabled={product.countInStock === 0}>
               <FiPackage size={16} />
               {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
             </Button>
