@@ -15,6 +15,7 @@ import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import OrderScreen from './pages/OrderScreen';
+import OrderHistory from './pages/OrderHistory';
 import Cart from './pages/Cart';
 import AuthCallback from './pages/AuthCallback';
 
@@ -48,6 +49,7 @@ function App() {
               <Route path="payment" element={<Payment />} />
               <Route path="placeorder" element={<PlaceOrder />} />
               <Route path="order/:id" element={<OrderScreen />} />
+              <Route path="order-history" element={<OrderHistory />} />
             </Route>
 
             <Route path="admin" element={<AdminRoute />}>
