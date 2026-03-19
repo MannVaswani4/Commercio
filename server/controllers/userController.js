@@ -23,13 +23,14 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 
     if (user) {
-        generateRefreshToken(res, user._id);
+        const refreshToken = generateRefreshToken(res, user._id);
         res.status(201).json({
             _id: user._id,
             name: user.name,
             email: user.email,
             role: user.role,
             accessToken: generateAccessToken(user._id),
+            refreshToken, // sent for iOS/cross-origin fallback (stored in localStorage by client)
         });
     } else {
         res.status(400);
@@ -46,13 +47,14 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-        generateRefreshToken(res, user._id);
+        const refreshToken = generateRefreshToken(res, user._id);
         res.json({
             _id: user._id,
             name: user.name,
             email: user.email,
             role: user.role,
             accessToken: generateAccessToken(user._id),
+            refreshToken, // sent for iOS/cross-origin fallback
         });
     } else {
         res.status(401);

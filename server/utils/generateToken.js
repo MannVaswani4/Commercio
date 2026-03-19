@@ -19,6 +19,10 @@ const generateRefreshToken = (res, userId) => {
         sameSite: isProd ? 'none' : 'lax',       // 'none' required for cross-origin (Vercel→Railway)
         maxAge: 30 * 24 * 60 * 60 * 1000,       // 30 days
     });
+
+    // Return the token so callers can also send it in the response body.
+    // This is the fallback for iOS Safari / browsers that block third-party cookies.
+    return token;
 };
 
 module.exports = { generateAccessToken, generateRefreshToken };
