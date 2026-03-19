@@ -16,10 +16,16 @@ app.use(cookieParser());
 app.use(helmet({
     crossOriginOpenerPolicy: { policy: 'unsafe-none' }, // allow Google OAuth popup to communicate
 }));
-app.use(cors({
-    origin: true,      // Mirrors the request's Origin — always sets the header
-    credentials: true,
-}));
+const corsOptions = {
+    origin: true,        // Mirror request Origin — always sets the header
+    credentials: true,   // Required for cookies (refresh token)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+// Handle OPTIONS preflight for ALL routes FIRST (before any other middleware)
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Session (needed for passport, though we use stateless JWT — only used during OAuth handshake)
 app.use(session({

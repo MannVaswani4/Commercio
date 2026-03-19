@@ -1,4 +1,4 @@
-const { generateAccessToken } = require('../../server/utils/generateToken');
+const { generateAccessToken } = require('../../utils/generateToken');
 const jwt = require('jsonwebtoken');
 
 describe('generateAccessToken', () => {
