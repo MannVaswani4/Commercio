@@ -16,12 +16,12 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-# Copy dependencies and application code from builder
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-COPY --from=builder /usr/src/app ./
+# Copy dependencies and application code from builder (with correct ownership)
+COPY --chown=node:node --from=builder /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=builder /usr/src/app ./
 
-# Create uploads and images directories with correct permissions if they don't exist
-RUN mkdir -p uploads images && chown -R node:node /usr/src/app
+# Create uploads and images directories (already running as correct user via --chown above)
+RUN mkdir -p uploads images
 
 # Use non-root user (Non-root user requirement)
 USER node
