@@ -26,13 +26,13 @@ RUN mkdir -p uploads images && chown -R node:node /usr/src/app
 # Use non-root user (Non-root user requirement)
 USER node
 
-# Expose the application port
-EXPOSE 5001
+# Expose the application port (Render injects its own $PORT at runtime)
+EXPOSE 10000
 
 # Healthcheck configuration (Healthcheck configured requirement)
-# We use a simple Node.js script to check if the server is responding, avoiding the need to install curl
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:5001/', (r) => { if (r.statusCode !== 200) process.exit(1); process.exit(0); }).on('error', () => process.exit(1))"
+# Uses $PORT so it works on both Render (dynamic) and ECS (5001)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:' + (process.env.PORT || 10000) + '/', (r) => { if (r.statusCode !== 200) process.exit(1); process.exit(0); }).on('error', () => process.exit(1))"
 
 # Start the application
 CMD [ "npm", "start" ]
