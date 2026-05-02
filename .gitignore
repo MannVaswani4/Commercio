@@ -32,3 +32,6 @@ Thumbs.db
 # Uploads (user-generated content)
 server/uploads/*
 !server/uploads/.gitkeep
+
+coverage/
+reports/

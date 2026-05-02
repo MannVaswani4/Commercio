@@ -2,5 +2,9 @@
   "testEnvironment": "node",
   "testMatch": ["**/__tests__/**/*.test.js"],
   "coveragePathIgnorePatterns": ["/node_modules/"],
-  "setupFiles": ["<rootDir>/__tests__/setup.js"]
+  "setupFiles": ["<rootDir>/__tests__/setup.js"],
+  "reporters": [
+    "default",
+    ["jest-junit", { "outputDirectory": "reports", "outputName": "jest-junit.xml" }]
+  ]
 }
