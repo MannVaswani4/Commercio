@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet({
     crossOriginOpenerPolicy: { policy: 'unsafe-none' }, // allow Google OAuth popup to communicate
+    crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow Vercel frontend to load images from Render
 }));
 // Trust Railway/Heroku reverse proxy so req.secure = true (required for secure cookies)
 app.set('trust proxy', 1);
